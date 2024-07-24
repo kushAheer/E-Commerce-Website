@@ -1,13 +1,40 @@
+//Packages <Open>
 import express from 'express';
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+//Packages <Close>
+
+//Files <Open>
+import AppDbContext from './Db/AppDbContext.js';
+import authRouter from './Routes/auth.routes.js';
+import categoryRouter from './Routes/category.routes.js';
+//Files <Close>
+
+dotenv.config(); //including this line to use the .env file
+
 
 const app = express();
+
+
+app.use(express.json()); //including this line to parse the incoming request with JSON payloads
+app.use(express.urlencoded({ extended: true })); //including this line to parse the incoming request with urlencoded payloads
+app.use(cookieParser()); //including this line to parse the incoming request with cookies
+// app.use(cors()); //including this line to enable CORS
+
+//Routes
+app.use('/api/auth',authRouter);
+// app.use('/api/prou')
+app.use('/api/category',categoryRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
+const port = process.env.PORT ;
 
 
-app.listen(3000, () => {
-    console.log('Server is running on port http://localhost:3000');
+app.listen(port, () => {
+    console.log(`Server is running on port http://localhost:${port}`);
 });
+
+

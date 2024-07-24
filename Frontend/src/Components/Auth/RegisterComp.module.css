@@ -1,0 +1,28 @@
+.center {
+    /* display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh; */
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    
+    align-items: center;
+
+}
+
+.formBox{
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+.formItem{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+margin: 10px;
+}
