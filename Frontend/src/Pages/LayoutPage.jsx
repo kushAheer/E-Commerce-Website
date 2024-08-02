@@ -6,7 +6,7 @@ function LayoutPage() {
   return (
     <>
         <NavBar />
-      
+		<Outlet />
     </>
   )
 }

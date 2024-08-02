@@ -1,0 +1,46 @@
+.centerWrapper{
+    left: 50%;
+    top: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+}
+.inputField{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+}
+.input {
+    height: 45px;
+    width: 42px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+.input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+.titleCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+.details{
+    
+    
+}
+@media screen and (min-width: 320px ) and (max-width: 480px){
+    .centerWrapper{
+        width: 100%;
+        
+        width: 35vh;
+        
+    }
+    
+}

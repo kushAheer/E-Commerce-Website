@@ -1,28 +1,45 @@
-.center {
-    /* display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh; */
+.centerWrapper{
+    left: 50%;
+    top: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+}
+.formWrapper{
+    
+    padding: 2rem;
+    
+    
+    
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.wrapper {
+.titleCenter{
     display: flex;
     justify-content: center;
-    
     align-items: center;
-
+    padding-bottom: 1rem;
+    
+    
+    
 }
-
 .formBox{
-    /* display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
+    
+    gap: 1rem;
 }
-.formItem{
-    display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: flex-start;
-margin: 10px;
+
+@media screen and (min-width: 320px ) and (max-width: 480px){
+    .centerWrapper{
+        width: 100%;
+        
+        width: 35vh;
+        
+    }
+    .titleCenter{
+        padding-top: 3rem;
+    }
 }

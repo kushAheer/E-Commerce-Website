@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
 
-export default generateToken = async (id) => {
+const generateToken = async (id) => {
     const token = jsonwebtoken.sign(
         {
             id
@@ -12,3 +12,5 @@ export default generateToken = async (id) => {
     )
     return token;
 }
+
+export default generateToken;

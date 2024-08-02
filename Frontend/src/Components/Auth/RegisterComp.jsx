@@ -1,50 +1,61 @@
 import React from 'react'
 import classes from './RegisterComp.module.css'
+import useRegister from '../../Hooks/useRegister'
+import { useState } from 'react';
 
 function RegisterComp() {
+
+	const {loading  ,registerUser } = useRegister();
+	const [fullName , setFullName] = useState('')
+	const [email , setEmail] = useState('')
+	const [password , setPassword] = useState('')
+
+	const handleSubmit = async (e)=>{
+		e.preventDefault()
+		const data = {
+			fullName,
+			email,
+			password
+		}
+		await registerUser(data);
+		
+	}
+
+
 	return (
 		<>
-			<div class="vh-90 gradient-custom">
-				<div class="container h-100">
-					<div class="row d-flex justify-content-center align-items-center">
-						<div class="col-12 col-md-8 col-lg-6 col-xl-5">
-							<div class=" bg-dark text-white" style={{ borderRadius: '1rem' }}>
-								<div class="card-body p-5 text-center">
-									<div class="mt-md-4 ">
-										<h2 class="fw-bold mb-2 text-uppercase">Register</h2>
-										{/* <p class="text-white-50 mb-5">Please enter your login and password!</p> */}
-										<div className={`${classes.formBox}`}>
-
-											<div  className={`${classes.formItem}`}>
-												<label class="form-label" htmlFor="typeEmail">Full Name</label>
-												<input type="text" id="typeEmailX" class="form-control" />
-											</div>
-											<div className={`${classes.formItem}`}>
-												<label class="form-label" htmlFor="typeEmail">Email</label>
-												<input type="email" id="typeEmailX" class="form-control" />
-											</div>
-
-											<div className={`${classes.formItem}`}>
-												<label class="form-label" htmlFor="typePassword">Password</label>
-												<input type="password" id="typePasswordX" class="form-control" />
-											</div>
-										</div>
-
-										<p class="small mb-5 pb-lg-2"><a class="text-white-50" href="#!">Forgot password?</a></p>
-
-										<button class="btn btn-outline-light btn-lg px-5" type="submit">Create</button>
-
-									</div>
-
-									<div>
-										<p class="mb-0 mt-5">Already Have account? <a href="#!" class="text-white-50 fw-bold">Login</a>
-										</p>
-									</div>
-								</div>
+			<div className={`${classes.centerWrapper} pt-5`}>
+				<div className="row">
+					<div className="col-md-12">
+						<div className={`row `}>
+							<div className={`col-md-12 ${classes.titleCenter}`}>
+								<h3>Create New Account</h3>
 							</div>
+							<div className={`col-md-12 ${classes.formWrapper}`}>
+								<form className={`${classes.formBox}`} onSubmit={handleSubmit}>
+									<div className='form-group w-100'>
+										<label>Full Name</label>
+										<input type='text' className='form-control' placeholder='Enter Full Name' value={fullName} onChange={(e)=>setFullName(e.target.value)} />
+
+									</div>
+									<div className='form-group w-100'>
+										<label>Email</label>
+										<input type='email' className='form-control' placeholder='Enter Email' value={email} onChange={(e)=>setEmail(e.target.value)}  />
+
+									</div>
+									<div className='form-group w-100'>
+										<label>Password</label>
+										<input type='password' className='form-control' placeholder='Password'  value={password} onChange={(e)=>setPassword(e.target.value)} />
+
+									</div>
+									<button type='submit' className='btn btn-primary' style={{width : '100%'}}>{loading ? "Loading..." : "Register"}</button>
+								</form>
+							</div>
+
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</>
 	)

@@ -42,19 +42,27 @@ export const loginRequest = async (req, res) => {
 
             return res.status(202).json({ status: 202, message: 'Invalid Email or Password' })
         }
-        const Token = generateToken(user.id);
+        const Token = await generateToken(user.id);
 
+        
+
+        await db.query('UPDATE users SET token = ? WHERE id = ?', [Token, user.id]);
         res.cookie('token', Token,
             {
                 httpOnly: true,
-                secure: true,
+                secure: false,
                 maxAge: 1000 * 60 * 60 * 24 * 7
 
             });
-
-        await db.query('UPDATE users SET token = ? WHERE id = ?', [Token, user.id]);
-        
-        return res.status(200).json({ status: 200, message: 'Login Successfull', userData: user, token: Token })
+        const data = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            token: Token,
+            role : user.roles,
+            user_status : user.user_status
+        }
+        return res.status(200).json({ status: 200, message: 'Login Successfull', userData: data })
 
     } catch (error) {
 
@@ -74,7 +82,7 @@ export const registerRequest = async (req, res) => {
             return res.status(202).json({ status: 202, message: 'Please fill all the fields' })
 
         }
-        if (fullName.length < 25) {
+        if (fullName.length > 25) {
 
             return res.status(202).json({ status: 202, message: 'Full Name must be at less than 25 characters' })
 
@@ -109,10 +117,23 @@ export const registerRequest = async (req, res) => {
 
         const otp = await sendOtpVerificationEmail(email);
 
-        const [result] = await db.query('UPDATE users SET email_otp = ? WHERE id = ?', [otp, newUser.insertId]);
+        const Token = await generateToken(newUser.insertId);
+        const [result] = await db.query('UPDATE users SET email_otp = ? ,token = ? WHERE id = ?', [otp, Token,newUser.insertId]);
+
+        
+
+        
+        res.cookie('token', Token,
+            {
+                httpOnly: true,
+                secure: true,
+                maxAge: 1000 * 60 * 60 * 24 * 7,
+                path : '/'
+
+            });
 
         if (newUser) {
-            return res.status(200).json({ status: 200, message: 'Verification email has been sent to your email' })
+            return res.status(200).json({ status: 200, message: 'Verification email has been sent to your email'  })
 
         } else {
 
@@ -143,12 +164,10 @@ export const logoutRequest = async (req, res) => {
     }
 }
 
-
-
 export const verfiyOtp = async (req, res) => {
     try {
-        const { id, otp } = req.body;
-
+        const { otp } = req.body;
+        const {id} = req.user;
         if (otp == undefined) {
 
             return res.status(202).json({ status: 202, message: 'Please fill all the fields' })
@@ -174,14 +193,14 @@ export const verfiyOtp = async (req, res) => {
         }
 
     } catch (e) {
+
         return res.status(500).json({ status: 500, message: 'Internal Server Error', error: e.message })
+
     }
 
 
 
 }
-
-
 
 const sendOtpVerificationEmail = async (email) => {
 

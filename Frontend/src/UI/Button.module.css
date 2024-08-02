@@ -1,0 +1,13 @@
+.btn{
+    margin-top: 25px;
+    width: 100%;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    padding: 9px 0;
+    cursor: pointer;
+    border-radius: 6px;
+    
+    background: #9152f6;
+    transition: all 0.2s ease;
+  }
