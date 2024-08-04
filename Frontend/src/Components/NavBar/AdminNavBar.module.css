@@ -1,0 +1,16 @@
+.navContainer{
+    border-bottom: 1px solid rgb(231, 230, 230);
+}
+
+
+.wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px;
+}
+.navLink{
+    text-decoration: none;
+    color: black;
+    
+}

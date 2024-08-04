@@ -9,6 +9,8 @@ import LayoutPage from './Pages/LayoutPage'
 import OtpVerifyPage from './Pages/OtpVerifyPage'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
+import AdminLayouPage from './Pages/AdminLayouPage'
+import AdminPage from './Pages/AdminPage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,7 +22,17 @@ function App() {
 			{path : '/', element : <HomePage />},
 			{path : '/register', element : <RegisterPage />},
 			{path : '/login', element : <LoginPage />},
-			{path : '/otp-verify', element : <OtpVerifyPage />}
+			{path : '/otp-verify', element : <OtpVerifyPage />},
+			{
+				path : '/admin',
+				element : <AdminLayouPage />,
+				children : [
+					{path : '', element : <AdminPage />},
+					{path : 'products', element : <h1>Products</h1>},
+					{path : 'orders', element : <h1>Orders</h1>},
+				]
+
+			}
 		]
 	}])
   return (

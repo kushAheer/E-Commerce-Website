@@ -38,3 +38,11 @@ export const loginRequest = async (data)=>{
     })
     return await res.json();
 }
+
+export const logoutRequest = async ()=>{
+    const res = await fetch('http://localhost:5000/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+    })
+    return await res.json();
+}
