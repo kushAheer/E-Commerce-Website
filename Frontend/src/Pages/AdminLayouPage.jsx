@@ -6,7 +6,10 @@ function AdminLayouPage() {
   return (
     <>
         <AdminNavBar />
-        <Outlet />
+        {/* <div style={{backgroundColor : "#F7F6F6" , height:"100vh"}}> */}
+
+          <Outlet />
+        {/* </div> */}
     </>
   )
 }

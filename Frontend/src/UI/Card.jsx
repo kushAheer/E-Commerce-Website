@@ -1,20 +1,24 @@
 import React from 'react'
+import classes from './Card.module.css'
+import { useState } from 'react';
 
-function Card() {
+function Card(props) {
+
+    
+
+    
     return (
         <>
-            <div className={`card`}>
-                
-                
+            <div className={`card ${classes.boxShadow}`}>
                 
                         <div className={`card-body`}>
                             <div className={`d-flex justify-content-between px-md-1`}>
                                 <div>
-                                    <h1>Card Ttile</h1>
-                                    <p>Card Description</p>
+                                    <h1 style={{fontSize : '1rem' , color : 'rgb(164, 156, 156)'}}>{props.title}</h1>
+                                    <p style={{fontSize : '2rem'}}>{props.details}</p>
                                 </div>
                                 <div className={`align-self-center`}>
-                                    <i class="fas fa-rocket text-danger fa-3x"></i>
+                                <img width="64" height="64" src={props.img} />
                                 </div>
 
                             </div>

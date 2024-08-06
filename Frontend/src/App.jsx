@@ -11,6 +11,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import AdminLayouPage from './Pages/AdminLayouPage'
 import AdminPage from './Pages/AdminPage'
+import CreateProduct from './Components/Products/CreateProduct'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -30,6 +31,7 @@ function App() {
 					{path : '', element : <AdminPage />},
 					{path : 'products', element : <h1>Products</h1>},
 					{path : 'orders', element : <h1>Orders</h1>},
+					{path : 'product/create' , element : <CreateProduct/>}
 				]
 
 			}

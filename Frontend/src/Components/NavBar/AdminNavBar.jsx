@@ -29,9 +29,6 @@ function AdminNavBar() {
                                 
                         </Dropdown.Menu>
                     </Dropdown>
-
-
-                    
                 </div>
             </nav>
         </>
