@@ -5,7 +5,7 @@ export const getProductsRequest = async (req, res) => {
         
         const db = await AppDbContext();
         
-        const [[products]] = await db.query('SELECT * FROM products');
+        const [products] = await db.query('SELECT * FROM products');
 
         if(products.length == 0){
 
@@ -20,6 +20,77 @@ export const getProductsRequest = async (req, res) => {
 
         return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
     }
+}
+export const getAscProductsRequest = async (req, res) => {
+    try {
+        
+        const db = await AppDbContext();
+        
+        const [products] = await db.query('SELECT * FROM products ORDER BY product_price ASC');
+
+        if(products.length == 0){
+
+            return res.status(404).json({status : 404 , message : "No Data Found"});
+
+        }
+        
+        return res.status(200).json({status: 200, productsData : products});
+
+        
+    } catch (error) {
+
+        return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
+    }
+}
+
+export const getDescProductsRequest = async (req, res) => {
+    try {
+        
+        const db = await AppDbContext();
+        
+        const [products] = await db.query('SELECT * FROM products ORDER BY product_price DESC');
+
+        if(products.length == 0){
+
+            return res.status(404).json({status : 404 , message : "No Data Found"});
+
+        }
+        
+        return res.status(200).json({status: 200, productsData : products});
+
+        
+    } catch (error) {
+
+        return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
+    }
+}
+
+export const getProductsByCategoryRequest = async (req, res) => {
+    try {
+        
+        const {id} = req.params;
+        
+        const db = await AppDbContext();
+        
+        const [products] = await db.query('SELECT * FROM products INNER JOIN category_product ON products.id = category_product.product_id WHERE category_product.category_id = ?' , [id]);
+
+        if(products.length == 0){
+
+            return res.status(404).json({status : 404 , message : "No Data Found"});
+
+        }
+        
+        return res.status(200).json({status: 200, productsData : products});
+
+        
+    } catch (error) {
+
+        return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
+    }
+}
+
+export const getProductsBySubCategoryRequest = async (req, res) => {
+
 }
 
 export const getProductsByIdRequest = async (req, res) => {
@@ -51,17 +122,17 @@ export const createProductRequest = async (req, res) => {
 
     try {
 
-        const { name, description, slug,price, category_id } = req.body;
+        const { name, description,price, category_id ,parent_cat_id } = req.body;
 
         if (name == undefined || description == undefined || price == undefined || category_id == undefined) {
 
             return res.status(202).json({ status: 202, message: 'Please fill all the fields' })
 
         }
-
+        const slug = name.trim().replace(/\s+/g, '-').toLowerCase();
         if (name.length < 3) {
 
-            return res.status(202).json({ status: 202, message: 'Product name should be atleast 3 characters long' })
+            return res.status(202).json({ status: 202, message: 'Product name should be at least 3 characters long' })
 
         }
 
@@ -70,7 +141,7 @@ export const createProductRequest = async (req, res) => {
         //     return res.status(202).json({ status: 202, message: 'Product description should be atleast 10 characters long' })
         
         // }
-        if(!(req.files.frontImage || req.files.images)){
+        if(!(req.files.frontImage && req.files.images)){
 
             return res.status(202).json({ status: 202, message: 'Please upload Product images' })
 
@@ -97,7 +168,8 @@ export const createProductRequest = async (req, res) => {
 
         }
 
-        const [catResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)' , [result.insertId, category_id]);
+        const [catResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)' , [result.insertId, parent_cat_id]);
+        const [subCatResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)' , [result.insertId, category_id]);
 
         if(catResult.affectedRows == 0){
 

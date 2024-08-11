@@ -15,8 +15,8 @@ function AdminNavBar() {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                                 
-                                <Link to='/admin/category' className={`dropdown-item`}>Create Category</Link>
-                                <Link to='/admin/category' className={`dropdown-item`}>Create Sub-Category</Link>
+                                <Link to='/admin/category/create' className={`dropdown-item`}>Create Category</Link>
+                                <Link to='/admin/subcategory/create' className={`dropdown-item`}>Create Sub-Category</Link>
                         </Dropdown.Menu>
                     </Dropdown>
                     <Dropdown>

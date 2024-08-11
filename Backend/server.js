@@ -3,6 +3,8 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 //Packages <Close>
 
 //Files <Open>
@@ -31,6 +33,9 @@ app.use(cookieParser()); //including this line to parse the incoming request wit
 
 //Routes
 app.use('/api/auth',authRouter);
+const filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(filename);
+app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
 
 app.use('/api/category',categoryRouter)
 app.use('/api/product',productRouter)

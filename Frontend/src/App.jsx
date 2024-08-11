@@ -7,14 +7,23 @@ import RegisterPage from './Pages/RegisterPage'
 import LoginPage from './Pages/LoginPage'
 import LayoutPage from './Pages/LayoutPage'
 import OtpVerifyPage from './Pages/OtpVerifyPage'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import AdminLayouPage from './Pages/AdminLayouPage'
 import AdminPage from './Pages/AdminPage'
 import CreateProduct from './Components/Products/CreateProduct'
+import CreateCategory from './Components/Category/CreateCategory'
+import CreateSubCategory from './Components/Category/CreateSubCategory'
+import { useSelector } from 'react-redux'
+import ProductPage from './Pages/ProductPage'
+import ProductLayoutPage from './Pages/ProductLayoutPage'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  	const [count, setCount] = useState(0)
+
+	const user  = useSelector(state => state.users.user)
+	const token = useSelector(state => state.users.token)
 
 	const router = createBrowserRouter([{
 		path : '/',
@@ -24,16 +33,25 @@ function App() {
 			{path : '/register', element : <RegisterPage />},
 			{path : '/login', element : <LoginPage />},
 			{path : '/otp-verify', element : <OtpVerifyPage />},
+			{	
+				path : '/product', 
+				element : <ProductLayoutPage />,
+				children :  [
+					{path : '', element : <ProductPage />},
+				]
+			},
 			{
 				path : '/admin',
-				element : <AdminLayouPage />,
+				element : user?.role == "admin" ?  <AdminLayouPage /> : <Navigate to={"/"} />,
 				children : [
 					{path : '', element : <AdminPage />},
 					{path : 'products', element : <h1>Products</h1>},
 					{path : 'orders', element : <h1>Orders</h1>},
-					{path : 'product/create' , element : <CreateProduct/>}
+					{path : 'product/create' , element : <CreateProduct/>},
+					{path : 'category', element : <h1>Category</h1>},
+					{path : 'category/create', element : <CreateCategory/>},
+					{path : 'subcategory/create', element : <CreateSubCategory/>},
 				]
-
 			}
 		]
 	}])
