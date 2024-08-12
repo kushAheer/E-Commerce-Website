@@ -2,155 +2,118 @@ import React from 'react'
 import classes from './CreateProduct.module.css'
 import ImageUploader from '../../UI/ImageUploader'
 import { useState } from 'react'
-import useGetCategory from '../../Hooks/useGetCategory'
-import useGetSubCategory from '../../Hooks/useGetSubCategory'
+
 import useCreateProduct from '../../Hooks/useCreateProduct'
+import useGetCategoryTree from '../../Hooks/useGetCategoryTree'
 
 function CreateProduct() {
 
-    const [isActive, setIsActive] = useState(false);
-    const [trigger, setTrigger] = useState(false)
-    const [ id , setId ] = useState(null)
-
     const [Name, setName] = useState('')
     const [Description, setDescription] = useState('')
-    
     const [Price, setPrice] = useState('')
     const [image, setImage] = useState([])
-    const [frontImage, setFrontImage] = useState(null)
-    const [subCategoryId, setSubCategoryId] = useState('')
+    const [categoryList, setCategoryList] = useState([])
+
+    const { loading: createLoading, createProduct } = useCreateProduct()
+    const { loading, categories } = useGetCategoryTree()
 
 
 
-
-
-
-    const { loading, categories } = useGetCategory()
-    const {loading : createLoading , createProduct} = useCreateProduct()
-    const { loading: subLoading, subCategories } = useGetSubCategory(trigger , id)
-    
-
-    const handleSelect = (e) => {
-
-        if (e.target.value === '-1') {
-
-            setIsActive(false)
-
-        } else {
-            setTrigger(!trigger)
-            setIsActive(true)
-            setId(e.target.value)
-        }
+    const handleCheck = (e) => {
         
-        
+        setCategoryList([...categoryList, e.target.value])
     }
-    const handleSubCategory = (e) => {
-        if(e.target.value != '-1'){
-            
-            setSubCategoryId(e.target.value)
-        }
+    const createTree = (categories) => {
         
+        const tree = categories.map((item) => {
+            return (
+                
+                <li key={item.category.id} >
+                    <input type='checkbox' className='form-checkbox' value={item.category.id} onChange={handleCheck} />
+                    <label className='m-1' style={{ fontSize: '0.75rem' }}>{item.category.category_name}</label>
+
+                    <div className=''>
+                        <ul className='list-unstyled ps-4'>
+                            {item.category.children.length > 0 && createTree(item.category.children)}
+                        </ul>
+                    </div>
+                </li>
+            )
+        })
+        return tree;
     }
     
-
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(subCategories == '-1'){
-            alert('Please select a sub category')
-            return;
-        }
+        
         const data = {
             name: Name,
             description: Description,
-        
+
             price: Price,
             image: image,
             frontImage: e.target['front-image'].files,
-            category_id : subCategoryId,
-            parent_cat_id: id
+            categoryList: categoryList,
+            
         }
-        await createProduct(data);
-        
-    }
 
+        await createProduct(data);
+
+    }
 
     return (
         <>
             <div className={`container pt-5 ${classes.wrapper}`}>
-                <div className={`row`}>
-                    <div className={'col-md-10  col-sm-12 card'}>
-                        <form className={`row card-body`} onSubmit={handleSubmit}>
+                <form className={`row p-3`} onSubmit={handleSubmit}>
+                    <div className={'col-md-8  col-sm-12 pt-3 '}>
+                        <div className={`row ps-3`} >
+                            <div className={`${classes.formWrapper}`}>
 
-                            <div className='col-md-12 pt-4'>
-                                <label htmlFor="name" className="form-label">Product Name</label>
-                                <input type="text" className="form-control" id="name" value={Name} onChange={(e)=>setName(e.target.value)}/>
+                                <div className='col-md-12 pt-4'>
+                                    <label htmlFor="name" className={`form-label ${classes.labelStyle}`} >Product Name</label>
+                                    <input type="text" className="form-control" id="name" value={Name} onChange={(e) => setName(e.target.value)} />
 
-                            </div>
-                            <div className='col-md-12 pt-4'>
-                                <label htmlFor="description" className="form-label">Description</label>
-                                <textarea type="text" className="form-control" id="description" value={Description} onChange={(e)=>setDescription(e.target.value)} />
+                                </div>
+                                <div className='col-md-12 pt-4'>
+                                    <label htmlFor="description" className={`form-label ${classes.labelStyle}`} >Description</label>
+                                    <textarea type="text" className="form-control" id="description" value={Description} onChange={(e) => setDescription(e.target.value)} />
+                                </div>
+
+                                <div className='col-md-12 pt-4'>
+                                    <ImageUploader setImage={setImage} prev={image} />
+                                </div>
+                                <div className='col-md-12 pt-4'>
+                                    <label htmlFor="front-image" className={`form-label ${classes.labelStyle}`} >Front Image</label>
+                                    <input type="file" className="form-control" id="front-image" />
+                                </div>
+                                <div className='col-md-12 pt-4'>
+                                    <label htmlFor="price" className={`form-label ${classes.labelStyle}`} >Price</label>
+                                    <input type="number" className="form-control" id="price" value={Price} onChange={(e) => setPrice(e.target.value)} />
+                                </div>
+                                <div>
+                                    <button type="submit" className="btn btn-primary mt-4 w-100">Submit</button>
+                                </div>
                             </div>
 
-                            <div className='col-md-12 pt-4'>
-                                <ImageUploader setImage={setImage} prev={image} />
-                            </div>
-                            <div className='col-md-12 pt-4'>
-                                <label htmlFor="front-image" className="form-label">Front Image</label>
-                                <input type="file" className="form-control" id="front-image" />
-                            </div>
-                            <div className='col-md-12 pt-4'>
-                                <label htmlFor="price" className="form-label">Price</label>
-                                <input type="number" className="form-control" id="price" value={Price} onChange={(e)=>setPrice(e.target.value)} />
-                            </div>
-                            {/* <div className={`${isActive ? "col-md-6" : "col-md-12"} pt-4`}>
-                                <label htmlFor="category" className="form-label" >Category</label>
-                                <select className="form-select" aria-label="Default select example" onChange={handleSelect}>
-                                    <option defaultValue value={"-1"}>Open this select menu</option>
-                                    {
-                                        categories.map((category) => {
-                                            return <option key={category.id} value={category.id}>{category.category_name}</option>
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            {isActive &&
-                            <div className={`col-md-6 pt-4`}>
-                                <label htmlFor="sub-category" className="form-label">Sub-Category</label>
-                                <select className="form-select" aria-label="Default select example" onChange={handleSubCategory}>
-                                    <option defaultValue value={"-1"}>Open this select menu</option>
-                                    {
-                                        subCategories.map((subCategory) => {
-                                            return <option key={subCategory.id} value={subCategory.id}> {subCategory.category_name}</option>
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            } */}
-                            <div>
-                                <button type="submit" className="btn btn-primary mt-4 w-100">Submit</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
-                    <div className='col-md-2 col-sm-12 card'>
-                        <form className='row card-body'>
-                            <div className='col-md-12'>
-                                <h1>Category</h1>
+                    <div className='col-md-4 col-sm-12 pt-3'>
+                        <div className={`row ps-3`}>
+                            <div className={`${classes.formWrapper}`}>
 
-                            </div>
-                            <div className='col-md-12'>
-                                <select className="form-select" aria-label="Default select example" onChange={handleSelect}>
-                                    <option defaultValue value={"-1"}>Open this select menu</option>
-                                    {
-                                        categories.map((category) => {
-                                            return <option key={category.id} value={category.id}>{category.category_name}</option>
-                                        })
-                                    }
-                                </select>
-                            </div>
-                        </form>
+                                <div className={`col-md-12 ${classes.titleStyle}`}>
+                                    <h5>Category</h5>
 
+                                </div>
+                                <div className={`col-md-12 pt-2 ${classes.scrollCatgory} `}>
+                                    <ul className=' list-unstyled p-0'>
+                                        {createTree(categories)}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </form>
 
             </div>
         </>

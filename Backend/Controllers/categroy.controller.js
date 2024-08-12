@@ -153,8 +153,8 @@ export const getAllCatAndSubCat = async (req, res) => {
 
     try {
         
-
-        const result = await buildCategoryTree();
+        const db = await AppDbContext();
+        const result = await buildCategoryTree(0,db);
         if(result.length == 0 || result == undefined){
             return res.status(202).json({ status: 202, message: 'No Categories Found' })
         }
@@ -169,9 +169,9 @@ export const getAllCatAndSubCat = async (req, res) => {
 }
 
 
-const buildCategoryTree = async ( parent_cat_id = 0 , result =[]) => {
+const buildCategoryTree = async ( parent_cat_id = 0 ,db) => {
 
-    const db = await AppDbContext();
+    
 
     const [categories] = await db.query('SELECT id,category_name ,parent_cat_id FROM categories WHERE parent_cat_id = ?' , [parent_cat_id]);
     if(categories.affectedRows == 0){
@@ -185,7 +185,7 @@ const buildCategoryTree = async ( parent_cat_id = 0 , result =[]) => {
     
     const data = await Promise.all( categories.map(async element => {
     
-        const children = await buildCategoryTree(element.id , result);    
+        const children = await buildCategoryTree(element.id , db);    
         // result.push([ ...result , {element , children}]);
         const category = {
             id : element.id,

@@ -1,5 +1,8 @@
 import AppDbContext from "../Db/AppDbContext.js";
 
+
+//GET REQUESTS <OPEN>
+
 export const getProductsRequest = async (req, res) => {
     try {
         
@@ -117,14 +120,17 @@ export const getProductsByIdRequest = async (req, res) => {
     }
 }
 
+//GET REQUESTS <CLOSE>
+
+//POST REQUESTS <OPEN>
 
 export const createProductRequest = async (req, res) => {
 
     try {
 
-        const { name, description,price, category_id ,parent_cat_id } = req.body;
+        const { name, description,price, categoryList } = req.body;
 
-        if (name == undefined || description == undefined || price == undefined || category_id == undefined) {
+        if (name == undefined || description == undefined || price == undefined || categoryList == undefined) {
 
             return res.status(202).json({ status: 202, message: 'Please fill all the fields' })
 
@@ -150,9 +156,10 @@ export const createProductRequest = async (req, res) => {
         const images = req.files.images;
         const frontImage = req.files.frontImage[0].path;
         
+        const db = await AppDbContext();
         const date = new Date();
 
-        const db = await AppDbContext();
+        
 
         const [result] = await db.query('INSERT INTO products (product_name , product_desc , product_price, product_slug ,product_status ,product_image ,created_at,updated_at) VALUES (?,?,?,?,? ,?,?,?)', [name, description, price, slug , "active" ,frontImage , date , date]);
         
@@ -168,13 +175,15 @@ export const createProductRequest = async (req, res) => {
 
         }
 
-        const [catResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)' , [result.insertId, parent_cat_id]);
-        const [subCatResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)' , [result.insertId, category_id]);
-
-        if(catResult.affectedRows == 0){
-
-            return res.status(500).json({message: "Internal Server Error" , errorMessage : "Product Creation Failed"});
-
+        for(let j = 0 ; j < categoryList.length ; j++){
+                
+                const [catResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)' , [result.insertId, categoryList[j]]);
+    
+                if(catResult.affectedRows == 0){
+    
+                    return res.status(500).json({message: "Internal Server Error" , errorMessage : "Product Creation Failed"});
+    
+                }
         }
         
         return res.status(200).json({ status: 200, message: 'Product Created' })
@@ -186,6 +195,10 @@ export const createProductRequest = async (req, res) => {
 
     }
 }
+
+//POST REQUESTS <CLOSE>
+
+//DELETE REQUESTS <OPEN>
 
 export const deleteProductRequest = async (req, res) => {
 
@@ -212,3 +225,5 @@ export const deleteProductRequest = async (req, res) => {
 
     }
 }
+
+//DELETE REQUESTS <CLOSE>

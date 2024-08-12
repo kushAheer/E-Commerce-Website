@@ -18,6 +18,7 @@ function useCreateProduct() {
             if (!verifyProduct(product)) {
                 return;
             }
+            console.log(product)
             
             const response = await createProductRequest(product);
 
@@ -62,10 +63,6 @@ const verifyProduct = (product) => {
     }
     if(product.image === null){
         toast.error('Please upload an image');
-        return false;
-    }
-    if(product.category_id === 'Select Category' || product.category_id === '-1'){
-        toast.error('Please select a category');
         return false;
     }
     if(product.frontImage === null){

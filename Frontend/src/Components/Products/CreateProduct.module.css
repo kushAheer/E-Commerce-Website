@@ -9,3 +9,29 @@
     }
     
 }
+.formWrapper{
+    width: 100%;
+    padding: 10px 17px;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #E6E9ED;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    column-break-inside: avoid;
+    opacity: 1;
+    transition: all .2s ease;
+}
+.scrollCatgory{
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.titleStyle{
+    border-bottom: 2px solid #E6E9ED;
+    padding: 1px 5px 6px;
+    font-size: medium;
+}
+.labelStyle{
+    font-size: 0.90rem;
+}
