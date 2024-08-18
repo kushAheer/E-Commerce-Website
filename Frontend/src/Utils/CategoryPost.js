@@ -1,11 +1,14 @@
 export const createCategoryRequest = async (category) =>{
+
+    const formData = new FormData();
+    formData.append('name',category.name);
+    formData.append('frontImage',category.frontImage);
+
+
     return await fetch('http://localhost:5000/api/category/CreateCategory', {
     method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        
-    },
-    body: JSON.stringify(category)
+    
+    body: formData
 }).then(res => res.json())
 }
 

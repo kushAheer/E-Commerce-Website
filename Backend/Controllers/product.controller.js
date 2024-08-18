@@ -26,7 +26,7 @@ export const getProductsRequest = async (req, res) => {
 }
 export const getAscProductsRequest = async (req, res) => {
     try {
-        
+        console.log('asc')
         const db = await AppDbContext();
         
         const [products] = await db.query('SELECT * FROM products ORDER BY product_price ASC');

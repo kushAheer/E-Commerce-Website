@@ -14,7 +14,6 @@ function ProductComp() {
                         <div className='row'>
                             <Suspense fallback={<h1>Loading...</h1>}>
                                 <ProductList />
-                                
                             </Suspense>
                             
                         </div>

@@ -63,10 +63,19 @@ export const createCategory = async (req, res) => {
             return res.status(202).json({ status: 202, message: 'Category name should be atleast 3 characters long' })
 
         }
+        const frontImage = req.files.frontImage[0].filename;
+
+        if(frontImage == undefined){
+            
+            return res.status(202).json({ status: 202, message: 'Please Upload Image' })
+
+        }
 
         const db = await AppDbContext();
-
+        
         const date = new Date();
+
+
 
         const [categoryAlready] = await db.query('SELECT * FROM categories Where category_name = ?', [name]);
 
@@ -77,7 +86,7 @@ export const createCategory = async (req, res) => {
         }
 
 
-        const [result] = await db.query('INSERT INTO categories (category_name  , category_slug ,created_at , updated_at) VALUES (?,?,?,?)', [name, slug, date, date]);
+        const [result] = await db.query('INSERT INTO categories (category_name  , category_slug ,created_at , updated_at ,front_image) VALUES (?,?,?,?,?)', [name, slug, date, date ,frontImage]);
 
 
 
@@ -155,8 +164,11 @@ export const getAllCatAndSubCat = async (req, res) => {
         
         const db = await AppDbContext();
         const result = await buildCategoryTree(0,db);
+        
         if(result.length == 0 || result == undefined){
+        
             return res.status(202).json({ status: 202, message: 'No Categories Found' })
+        
         }
 
         return res.status(200).json({ status: 200, message: 'Categories Fetched', result })

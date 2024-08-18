@@ -17,6 +17,7 @@ import CreateSubCategory from './Components/Category/CreateSubCategory'
 import { useSelector } from 'react-redux'
 import ProductPage from './Pages/ProductPage'
 import ProductLayoutPage from './Pages/ProductLayoutPage'
+import ProductDetailPage from './Pages/ProductDetailPage'
 
 
 function App() {
@@ -39,7 +40,9 @@ function App() {
 				children :  [
 					{path : '', element : <ProductPage />},
 				]
+
 			},
+			{path : '/product/:slug', element : <ProductDetailPage />},
 			{
 				path : '/admin',
 				element : user?.role == "admin" ?  <AdminLayouPage /> : <Navigate to={"/"} />,

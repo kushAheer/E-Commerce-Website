@@ -5,7 +5,7 @@ import classes from './ProductCard.module.css'
 
 function ProductCard({image ,title , price}) {
     
-    console.log(image)
+    
 
     return (
         <>

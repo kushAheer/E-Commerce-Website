@@ -4,3 +4,5 @@ vite.config.js
 Frontend/.eslintrc.cjs
 .env
 .vscode
+
+Backend/Uploads

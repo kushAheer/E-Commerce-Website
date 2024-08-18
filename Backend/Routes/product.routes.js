@@ -1,12 +1,26 @@
 import { Router } from "express";
-import { getProductsByIdRequest, getProductsRequest,createProductRequest, getAscProductsRequest, getDescProductsRequest } from "../Controllers/product.controller.js";
+import { 
+    getAscProductsRequest,
+    getProductsByIdRequest,
+    getProductsRequest,
+    createProductRequest, 
+    getDescProductsRequest,
+} from "../Controllers/product.controller.js";
 import { upload } from "../Middleware/mutler.middleware.js";
 
 const router = Router();
 
 router.get('/',getProductsRequest);
 
+router.get('/asc',getAscProductsRequest);
+
+router.get('/desc',getDescProductsRequest);
+
+
 router.get('/:id',getProductsByIdRequest);
+
+
+
 
 router.post('/CreateProduct',upload.fields([
     {
@@ -19,9 +33,6 @@ router.post('/CreateProduct',upload.fields([
     }
 ]),createProductRequest);
 
-router.get('/getProductsAsc',getAscProductsRequest);
-
-router.get('/getProductsDesc',getDescProductsRequest);
 
 
 
