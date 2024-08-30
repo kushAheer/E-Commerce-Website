@@ -12,36 +12,36 @@ function useGetCategory() {
     const [categories, setCategories] = useState([])
     const user  = useSelector(state => state.users.user)
     
-    
+    const getCategory = async () => {
+        try {
+            
+            setLoading(true)
 
-    useEffect(() => {
-        const getCategory = async () => {
-            try {
+            const response = await getCategoryRequest();
+
+            if(response.status === 200){
                 
-                setLoading(true)
-    
-                const response = await getCategoryRequest();
-    
-                if(response.status === 200){
-                    
-                    setCategories(response.data);
-    
-                }else{
-    
-                    toast.error('Failed to get categories');
-    
-                }
-            } catch (error) {
-                
+                setCategories(response.data);
+
+            }else{
+
                 toast.error('Failed to get categories');
 
-            }finally{
-                setLoading(false)
             }
+        } catch (error) {
+            
+            toast.error('Failed to get categories');
+
+        }finally{
+            setLoading(false)
         }
-        if(user.role === 'admin'){
-            getCategory();
-        }
+    }
+
+    useEffect(() => {
+        
+        
+        getCategory();
+        
         
         
     }, [])

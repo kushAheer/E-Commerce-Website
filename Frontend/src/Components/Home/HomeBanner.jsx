@@ -1,15 +1,16 @@
 import React from 'react'
-import firstBanner from '../../assets/classics.jpg'
-import secondBanner from '../../assets/cotton.jpg'
-import thirdBanner from '../../assets/wedding.jpg'
+import firstBanner from '../../assets/home_pageBanner.webp'
+import secondBanner from '../../assets/home_pageBanner2.webp'
+import thirdBanner from '../../assets/homepage_banner3.webp'
 
 
 function FrontImages() {
+	
 	return (
 		<>
-			<div classNameName="container-fluid m-0">
-				<div classNameName='row'>
-					<div classNameName='col-md-12 m-0 p-0'>
+			<div className="container-fluid m-0">
+				<div className='row'>
+					<div className='col-md-12 m-0 p-0'>
 						<div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
 							<div className="carousel-indicators">
 								<button type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide-to="0" className="active" aria-current="true" aria-label="Slide 1"></button>
@@ -30,14 +31,7 @@ function FrontImages() {
 									
 								</div>
 							</div>
-							{/* <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-								<span className="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span className="visually-hidden">Previous</span>
-							</button> */}
-							{/* <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-								<span className="carousel-control-next-icon" aria-hidden="true"></span>
-								<span className="visually-hidden">Next</span>
-							</button> */}
+							
 						</div>
 					</div>
 				</div>

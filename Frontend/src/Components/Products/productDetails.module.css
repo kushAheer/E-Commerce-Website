@@ -1,0 +1,73 @@
+.title{
+    font-size: 1.8 rem;
+    font-weight: 700;
+    color: #59585B;
+    
+
+}
+
+.category{
+    font-size: 15px;
+    font-weight: 500;
+    color: #666668;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.price{
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #59585B;
+    margin-bottom: 10px;
+}
+
+.quantityWrapper{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    
+
+}
+.quantityLabel{
+    font-size: 1rem;
+    font-weight: 500;
+    color: #59585B;
+    
+}
+
+.qtyOption{
+    padding: 4px;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+    background: white;
+    width: 4rem;
+}
+.addToCart{
+    background-color: rgb(236, 61, 37);
+    border-color: rgb(255, 255, 255);
+    color: white;
+    width: 50%;
+    font-size: 1rem;
+}
+
+.detailsWrapper{
+    border-radius: 0;
+    
+
+
+}
+.details{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #59585B;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.desc{
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #59585B;
+    padding: 10px;
+    
+}

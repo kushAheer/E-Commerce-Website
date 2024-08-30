@@ -17,14 +17,16 @@ import CreateSubCategory from './Components/Category/CreateSubCategory'
 import { useSelector } from 'react-redux'
 import ProductPage from './Pages/ProductPage'
 import ProductLayoutPage from './Pages/ProductLayoutPage'
-import ProductDetailPage from './Pages/ProductDetailPage'
+import ProductDetailPage, { productDetailsLoader } from './Pages/ProductDetailPage'
+import CartPage from './Pages/CartPage'
+import Profilepage from './Pages/Profilepage'
 
 
 function App() {
   	const [count, setCount] = useState(0)
 
 	const user  = useSelector(state => state.users.user)
-	const token = useSelector(state => state.users.token)
+	
 
 	const router = createBrowserRouter([{
 		path : '/',
@@ -42,16 +44,17 @@ function App() {
 				]
 
 			},
-			{path : '/product/:slug', element : <ProductDetailPage />},
+			{path : '/product/:slug', element : <ProductDetailPage /> , loader : productDetailsLoader},
+			// {path : '/category', element : <h1>Category</h1>},
+			{path : '/cart', element : <CartPage />},
+			{path :'/profile',element : user ?  <Profilepage/> : <Navigate to={"/login"} />},
 			{
 				path : '/admin',
 				element : user?.role == "admin" ?  <AdminLayouPage /> : <Navigate to={"/"} />,
 				children : [
 					{path : '', element : <AdminPage />},
-					{path : 'products', element : <h1>Products</h1>},
-					{path : 'orders', element : <h1>Orders</h1>},
 					{path : 'product/create' , element : <CreateProduct/>},
-					{path : 'category', element : <h1>Category</h1>},
+					{path : 'orders', element : <h1>Orders</h1>},
 					{path : 'category/create', element : <CreateCategory/>},
 					{path : 'subcategory/create', element : <CreateSubCategory/>},
 				]

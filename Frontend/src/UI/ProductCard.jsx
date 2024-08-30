@@ -1,9 +1,10 @@
 import React from 'react'
 import Button from './Button'
 import classes from './ProductCard.module.css'
+import { Link } from 'react-router-dom'
 
 
-function ProductCard({image ,title , price}) {
+function ProductCard({image ,title , price,slug}) {
     
     
 
@@ -14,7 +15,17 @@ function ProductCard({image ,title , price}) {
                 <div className="card-body">
                     <h5 className={`${classes.text}`}>{title}</h5>
                     <p className={`${classes.price}`}>${Math.floor(price)}</p>
-                    <Button>ADD TO CART </Button>
+                    <div className='row'>
+
+                    <div className='col-md-12'>
+
+                        <Link to={`/product/${slug}`}><Button>DETAILS</Button></Link>
+                    </div>
+                    {/* <div className='col-md-4'>
+
+                        <Button onClicl><img width="32" height="32" src="https://img.icons8.com/windows/32/shopping-cart.png" alt="shopping-cart" /></Button>
+                    </div> */}
+                    </div>
                 </div>
             </div>
         </>

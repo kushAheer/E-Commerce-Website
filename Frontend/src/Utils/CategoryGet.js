@@ -4,7 +4,8 @@ export const getCategoryRequest = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include'
     });
 
     return response.json();
@@ -17,7 +18,8 @@ export const getSubCategoryRequest = async (id) => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include'
 
     }).then(res => res.json());
 

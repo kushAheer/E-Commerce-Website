@@ -1,0 +1,12 @@
+.item{
+    font-size: medium;
+}
+.itemWrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    
+    border-bottom: 1px solid #ccc;
+}

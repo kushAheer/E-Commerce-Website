@@ -8,7 +8,21 @@ export const getProductsRequest = async (req, res) => {
         
         const db = await AppDbContext();
         
-        const [products] = await db.query('SELECT * FROM products');
+        const {sortBy , category} = req.query;
+
+        let query = 'SELECT * FROM products WHERE 1 = 1 ';
+        // if(category != undefined){
+        //     query += `AND id IN (SELECT product_id FROM category_product WHERE  = (SELECT * from categories Where category_slug = ${category}) `;
+        // }
+
+        if(sortBy != undefined && sortBy != 'normal'){
+            query += `ORDER BY product_price ${sortBy} `;
+        }
+
+        
+        
+
+        const [products] = await db.query(query);
 
         if(products.length == 0){
 
@@ -23,50 +37,11 @@ export const getProductsRequest = async (req, res) => {
 
         return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
     }
-}
-export const getAscProductsRequest = async (req, res) => {
-    try {
-        console.log('asc')
-        const db = await AppDbContext();
-        
-        const [products] = await db.query('SELECT * FROM products ORDER BY product_price ASC');
-
-        if(products.length == 0){
-
-            return res.status(404).json({status : 404 , message : "No Data Found"});
-
-        }
-        
-        return res.status(200).json({status: 200, productsData : products});
-
-        
-    } catch (error) {
-
-        return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
-    }
+   
 }
 
-export const getDescProductsRequest = async (req, res) => {
-    try {
-        
-        const db = await AppDbContext();
-        
-        const [products] = await db.query('SELECT * FROM products ORDER BY product_price DESC');
 
-        if(products.length == 0){
 
-            return res.status(404).json({status : 404 , message : "No Data Found"});
-
-        }
-        
-        return res.status(200).json({status: 200, productsData : products});
-
-        
-    } catch (error) {
-
-        return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
-    }
-}
 
 export const getProductsByCategoryRequest = async (req, res) => {
     try {
@@ -99,19 +74,34 @@ export const getProductsBySubCategoryRequest = async (req, res) => {
 export const getProductsByIdRequest = async (req, res) => {
     try {
 
-        const {id} = req.params;
+        const {slug} = req.params;
         
         const db = await AppDbContext();
         
-        const [[product]] = await db.query('SELECT * FROM products WHERE id = ?', [id]);
+        const [[product]] = await db.query('SELECT * FROM products WHERE product_slug = ?', [slug]);
+
+        
         
         if(!product){
         
             return res.status(404).json({status: 404, message: "Product Not Found"});
         
         }
+        let [gallery] = await db.query('SELECT image_name FROM product_gallery WHERE product_id = ?' , [product.id]);
+
+
+        if(!gallery){
+            gallery = [];
+        }
+
+
+        const [[cat]] = await db.query('SELECT category_id FROM category_product WHERE product_id = ?' , [product.id]);
+
+        const [[category]] = await db.query('SELECT category_name FROM categories WHERE id = ?' , [cat.category_id]);
+
         
-        return res.status(200).json({status: 200, productData : product});
+        
+        return res.status(200).json({status: 200, productData : product , images : gallery , category : category});
         
     } catch (error) {
 

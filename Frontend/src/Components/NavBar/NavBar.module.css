@@ -9,3 +9,14 @@
     align-items: center;
     gap:20px
 }
+.notification{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: red;
+    font-size: xx-small;
+    color: white;
+
+}

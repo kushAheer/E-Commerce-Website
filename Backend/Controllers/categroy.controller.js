@@ -3,10 +3,17 @@ import AppDbContext from "../Db/AppDbContext.js";
 export const getCategory = async (req, res) => {
 
     try {
-
+        const dbQuery = "SELECT * FROM categories WHERE parent_cat_id = 0";
         const db = await AppDbContext();
 
-        const [result] = await db.query('SELECT * FROM categories where parent_cat_id = 0');
+        const query  = req.query;
+
+        if(query.limit != undefined){
+            dbQuery += ` LIMIT ${query.limit}`;
+
+        }
+        const [result] = await db.query(dbQuery);
+        
         if (result.length == 0) {
 
             return res.status(202).json({ status: 202, message: 'No Category Found' })
@@ -86,11 +93,11 @@ export const createCategory = async (req, res) => {
         }
 
 
-        const [result] = await db.query('INSERT INTO categories (category_name  , category_slug ,created_at , updated_at ,front_image) VALUES (?,?,?,?,?)', [name, slug, date, date ,frontImage]);
+        const [result] = await db.query('INSERT INTO categories (category_name  , category_slug ,created_at , updated_at ,front_image ,parent_cat_id) VALUES (?,?,?,?,?,?)', [name, slug, date, date ,frontImage ,0]);
 
 
 
-        const data = await db.query('UPDATE categories SET parent_cat_id = ? WHERE id = ? ', [result.insertId, result.insertId]);
+        
 
 
         return res.status(200).json({ status: 200, message: 'Category Created' })

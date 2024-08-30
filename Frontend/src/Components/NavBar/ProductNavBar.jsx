@@ -1,22 +1,31 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import useGetProduct from '../../Hooks/useGetProduct';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 function ProductNavBar() {
 
-
-    const onSelect = (e) => {
-        console.log(e.target.value);
+    const navigate = useNavigate()
+    // const onSelect = (e) => {
+    //     console.log(e.target.value);
         
 
-    }
-    const[type , setType] =  useState('normal');
+    // }
+    // const[type , setType] =  useState('normal');
 
-    const {product , loading } = useGetProduct(type)
+    // const {product , loading } = useGetProduct(type)
 
-    const typeHandler = (e) => {
-        console.log(e.target.value)
-        setType(e.target.value)
+    // const typeHandler = (e) => {
+    //     console.log(e.target.value)
+    //     setType(e.target.value)
+    // }
+    const handleSortChange = (event) => {
+        const value = event.target.value
+        if (value === 'normal') {
+            navigate('/product')
+        } else {
+            navigate(`/product?sortBy=${value}`)
+        }
     }
 
 
@@ -30,10 +39,10 @@ function ProductNavBar() {
                         <h5 className='d-none d-md-flex'>FILTER BY</h5>
                         <div className='d-flex flex-row align-items-center'>
                             <label className='pe-2'>SORT BY : </label>
-                            <select className='form-select w-auto' onChange={typeHandler}>
+                            <select className='form-select w-auto' onChange={handleSortChange}>
                                 <option defaultValue value={'normal'}>Relevant</option>
-                                <option value={'lowtohigh'}>Price Low to High</option>
-                                <option value={'hightolow'}>Price Hight to Low</option>
+                                <option value={'ASC'}>Price Low to High</option>
+                                <option value={'DESC'}>Price Hight to Low</option>
                             </select>
                         </div>
                     </div>

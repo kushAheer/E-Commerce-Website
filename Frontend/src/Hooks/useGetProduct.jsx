@@ -4,21 +4,28 @@ import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { setProducts } from '../Context/Slices/productSlice'
 import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
+
 
 
 function useGetProduct(type) {
     
     const [product, setProduct] = useState([])
     const [loading, setLoading] = useState(true)
-
+    const query = useParams();
+    const [searchParams] = useSearchParams()
+    
     
     const dispatch = useDispatch()
 
-    const getProduct = async () => {
+    const getProduct = async (query) => {
         try {
             
-            const res  = await productRequest()
-            console.log(res)
+            
+            console.log(query) 
+            const res  = await productRequest(query)
+            
 
             if(res.status === 200){
 
@@ -39,73 +46,16 @@ function useGetProduct(type) {
         }
     }
 
-    const sortedLowToHigh = async ()=>{
-
-        try {
-            console.log('low to high')
-            const res = await productlowToHighRequest();
-            console.log(res)
-            if(res.status === 200){
-
-                setProduct(res.productsData)
-                dispatch(setProducts(res.productsData))
-
-            }else{
-
-                toast.error(res.message)
-
-            }
-            
-        } catch (error) {
-
-            toast.error(error.message)
-
-        }
-
-
-
-    }
-
-    const sortedHighToLow = async ()=>{
-        try {
-            const res = await productHighToLowRequest();
-
-            if(res.status === 200){
-
-                setProduct(res.productsData)
-                dispatch(setProducts(res.productsData))
-
-            }else{
-
-                toast.error(res.message)
-
-            }
-            
-        } catch (error) {
-
-            toast.error(error.message)
-
-        }
-    }
     
+    
+    // useEffect(() => {
+        
+    //     getProduct(type)
+    // }, [type])
     useEffect(() => {
         
-        if(type == "normal"){
-
-            getProduct()
-            
-        }else if(type == "lowtohigh"){
-            
-            console.log('low to high')
-            sortedLowToHigh()
-            
-
-        }else if(type == "hightolow"){
-            
-            sortedHighToLow()
-
-        }
-    }, [type])
+        getProduct(searchParams.toString())
+    }, [searchParams])
     return {product, loading }
 }
 
@@ -114,26 +64,11 @@ export default useGetProduct
 
 
 
-const productRequest = async () => {
-    const response = await fetch('http://localhost:5000/api/product')
+const productRequest = async (query) => {
+    const response = await fetch(`http://localhost:5000/api/product?${query}`)
     const data = await response.json()
 
     return data
         
     
-}
-
-const productlowToHighRequest = async () => {
-    
-    const response = await fetch('http://localhost:5000/api/product/asc')
-    const data = await response.json()
-
-    return data
-}
-
-const productHighToLowRequest = async () => {
-    const response = await fetch('http://localhost:5000/api/product/desc')
-    const data = await response.json()
-
-    return data
 }

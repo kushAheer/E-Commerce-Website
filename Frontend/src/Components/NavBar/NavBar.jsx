@@ -10,7 +10,7 @@ function NavBar() {
 
     const isAuth = useSelector(state => state.users.user)
     const admin = isAuth?.role === 'admin';
-
+    const totalQuantity = useSelector(state => state.carts.totalQty)
     const {loading , logOutUser} = useLogOut()
 
     const logOutHandler = async () => {
@@ -30,13 +30,13 @@ function NavBar() {
                     <div className={`collapse navbar-collapse ${classes.itemCenter}`} id="navbarNav">
                         <ul className="navbar-nav">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Home</a>
+                                <Link to={'/'} className="nav-link active" aria-current="page" href="#">Home</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Category</a>
+                                <Link to={'/product'} className="nav-link" href="#">Products</Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Occasion</a>
+                                <Link to className="nav-link" href="#">Category</Link>
                             </li>
                         </ul>
                     </div>
@@ -51,7 +51,7 @@ function NavBar() {
                                     <Link to="/register" className="dropdown-item">Register</Link>
                                 </>}
                                 {isAuth && <>
-                                    <h1 className="dropdown-header">Hello UserName</h1>
+                                    <h1 className="dropdown-header">Hello {isAuth.name} </h1>
                                     <Link to="/profile" className="dropdown-item">Your Account</Link>
                                     <Link to="/orders" className="dropdown-item">Your Orders</Link>
                                     <button onClick={logOutHandler} className="dropdown-item">Log Out</button>
@@ -61,7 +61,8 @@ function NavBar() {
                         </Dropdown>
 
                         <div className="nav-item">
-                            <img width="32" height="32" src="https://img.icons8.com/windows/32/shopping-cart.png" alt="shopping-cart" />
+                            <div className={`${classes.notification}`}>{totalQuantity}</div>
+                            <Link to={'/cart'}><img width="32" height="32" src="https://img.icons8.com/windows/32/shopping-cart.png" alt="shopping-cart" /></Link>
                         </div>
                     </div>
                 </div>
