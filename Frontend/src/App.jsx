@@ -24,6 +24,7 @@ import Profilepage from './Pages/Profilepage'
 import AddressCreate from './Components/Cart/AddressCreate'
 import ShoppingList from './Components/Cart/ShoppingList'
 import AddressPage, { AddressPageLoader } from './Pages/AddressPage'
+import CheckOut from './Pages/CheckOut'
 // import AddressPage from './Pages/AddressPage'
 
 
@@ -31,7 +32,7 @@ function App() {
   	const [count, setCount] = useState(0)
 
 	const user  = useSelector(state => state.users.user)
-	
+	const address = useSelector(state => state.address.item)
 
 	const router = createBrowserRouter([{
 		path : '/',
@@ -53,10 +54,11 @@ function App() {
 			// {path : '/category', element : <h1>Category</h1>},
 			{path :'/profile',element : user ?  <Profilepage/> : <Navigate to={"/login"} />},
 			{path : '/cart',
-			element : <CartPage /> ,
+			element :user ?  <CartPage />  : <Navigate to={"/login"} />,
 			children :[
 				{path :'' ,element : <ShoppingList/>},
-				{path : 'address', element : user ? <AddressPage/> : <Navigate to={"/login"} /> , loader :AddressPageLoader},
+				{path : 'address', element : <AddressPage/>  , loader :AddressPageLoader},
+				{path : 'checkout', element : <CheckOut/>},
 			]},
 			{path : '/cart/createAddress', element : user ? <AddressCreate/> : <Navigate to={"/login"} />},
 			{

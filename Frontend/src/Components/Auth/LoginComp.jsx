@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './RegisterComp.module.css'
 import { useState } from 'react'
-import useLogin from '../../Hooks/useLogin'
+import useLogin from '../../Hooks/useLogin.js'
 
 function LoginComp() {
 

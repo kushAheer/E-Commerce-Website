@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './RegisterComp.module.css'
-import useRegister from '../../Hooks/useRegister'
+import useRegister from '../../Hooks/useRegister.js'
 import { useState } from 'react';
 
 function RegisterComp() {

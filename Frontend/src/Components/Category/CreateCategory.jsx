@@ -1,6 +1,6 @@
 import React from 'react'
 import classes from './CreateCategory.module.css'
-import useCreateCategory from '../../Hooks/useCreateCategory'
+import useCreateCategory from '../../Hooks/useCreateCategory.js'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 

@@ -162,7 +162,7 @@ export const createProductRequest = async (req, res) => {
         }
 
         const images = req.files.images;
-        const frontImage = req.files.frontImage[0].path;
+        const frontImage = req.files.frontImage[0].filename;
         
         const db = await AppDbContext();
         const date = new Date();
@@ -179,7 +179,7 @@ export const createProductRequest = async (req, res) => {
         
         for(let i = 0; i < images.length; i++){
 
-            await db.query('INSERT INTO product_gallery (product_id , image_name ,created_at , updated_at) VALUES (?,?,?,?)' , [result.insertId, images[i].path , date , date]);
+            await db.query('INSERT INTO product_gallery (product_id , image_name ,created_at , updated_at) VALUES (?,?,?,?)' , [result.insertId, images[i].filename , date , date]);
 
         }
 

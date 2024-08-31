@@ -41,6 +41,7 @@ function ProductDetails() {
         dispatch(removeFromCart(data.productData.id))
     }
     const updateHandler = (e) => {
+        e.preventDefault();
         const newQty = Number(e.target.value)
         setQty(e.target.value)
         if(itemExist){
@@ -93,7 +94,7 @@ function ProductDetails() {
                             </div>
                             <div className={`col-md-12 ${classes.quantityWrapper}`}>
                                 <h1 className={classes.quantityLabel}>Quantity</h1>
-                                <input type='number' min={1} max={5} className={classes.qtyOption} value={itemExist ? itemExist.quantity :qty  } onChange={updateHandler} />
+                                <input type='number' min={1} max={5} className={classes.qtyOption} value={itemExist ? Number(itemExist.quantity) :qty  } onChange={updateHandler} />
                             </div>
                             <div className='col-md-12 pt-3'>
                                 {!itemExist &&<button onClick={cartHandler} className={`btn btn-danger btnWidth btn-lg btn-block pointer ${classes.addToCart}`}>Add to Cart</button>}

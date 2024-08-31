@@ -3,7 +3,9 @@ import classes from './NavBar.module.css'
 import { useSelector } from 'react-redux'
 import { Dropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import useLogOut from '../../Hooks/useLogOut'
+import useLogOut from '../../Hooks/useLogOut.js'
+import { useDispatch } from 'react-redux'
+import { clearCart } from '../../Context/Slices/cartSlice.js'
 
 function NavBar() {
 
@@ -15,9 +17,10 @@ function NavBar() {
     
     const admin = isAuth?.role === 'admin';
     const {loading , logOutUser} = useLogOut()
+    const dispatch = useDispatch()
 
     const logOutHandler = async () => {
-        
+        dispatch(clearCart())
         await logOutUser()
 
     }
@@ -38,9 +41,9 @@ function NavBar() {
                             <li className="nav-item">
                                 <Link to={'/product'} className="nav-link" href="#">Products</Link>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <Link to className="nav-link">Category</Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     <div className={`${classes.endProfile}`}>

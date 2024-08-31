@@ -10,3 +10,25 @@
     
     border-bottom: 1px solid #ccc;
 }
+
+.text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: self-start;
+    font-size: medium;
+
+
+}
+
+.active {
+    background-color: #f0f0f0;
+}
+
+.qtyOption{
+    padding: 4px;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+    background: white;
+    width: 4rem;
+}

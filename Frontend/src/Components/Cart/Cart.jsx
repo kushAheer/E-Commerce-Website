@@ -10,8 +10,9 @@ function Cart() {
     
     const totalQuantity = useSelector(state => state.carts.totalQty)
     const totalPrice = useSelector(state => state.carts.totalPrice)
+    const id = useSelector(state =>state.address.id)
 
-    const params = useParams()
+    
     const location  = useLocation()
 
     const currentUrl = location.pathname + location.search
@@ -60,12 +61,15 @@ function Cart() {
 
                                 <Link to={'/product'}><button className={`btn pointer text-uppercase w-100`} style={{ backgroundColor: "white", color: "black" ,border: '1px solid black' ,borderRadius : '0px' }}>Continue Shopping</button></Link>
                                 {
-                                    currentUrl == '/cart' ? <Link to={'/cart/address'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Choose Delivery Address</button></Link> : null
+                                    currentUrl == '/cart' || currentUrl == '/cart/' ? <Link to={'/cart/address'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Choose Delivery Address</button></Link> : null
                                 }
                                 {
-                                    currentUrl == '/cart/address' ? <Link to={'/cart/checkout'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Proceed to CheckOut</button></Link> : null
+                                    currentUrl == '/cart/address' || currentUrl == '/cart/address/' ? <Link to={'/cart/checkout'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Proceed to CheckOut</button></Link> : null
                                 }
-                                
+                                {
+                                     (currentUrl === '/cart/checkout' ) ? <Link to={'/cart/checkout'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Confirm Order</button></Link> : null
+                                }
+
                             </div>
                         </div>
                     </div>

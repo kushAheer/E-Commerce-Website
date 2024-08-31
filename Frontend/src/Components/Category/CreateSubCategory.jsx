@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './CreateCategory.module.css'
-import useGetCategory from '../../Hooks/useGetCategory'
-import useCreateSubCategory from '../../Hooks/useCreateSubCategory'
+import useGetCategory from '../../Hooks/useGetCategory.js'
+import useCreateSubCategory from '../../Hooks/useCreateSubCategory.js'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 

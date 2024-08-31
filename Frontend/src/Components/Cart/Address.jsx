@@ -1,29 +1,35 @@
 import React, { useEffect } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
+import classes from './Cart.module.css'
+import { useDispatch } from 'react-redux'
+import { setAddress } from '../../Context/Slices/addressSlice'
+
 function Address() {
 
-
+    const dispatch = useDispatch()
     const data = useLoaderData()
     console.log(data.profileData)
+    const [details , setDetails] = React.useState(null)
     
 
-    const orderHandler = (id) => {
-        console.log(id)
+    const orderHandler = (item) => {
+        dispatch(setAddress(item))
+        setDetails(item.id)
     }
 
     return (
         <>
             <div className='row'>
-                {data.profileData.length > 0 && data.profileData ? data.profileData.map((item) => (
-                    <div className='col-md-6' key={item.id} onClick={()=>orderHandler(item.id)}>
+                {data.profileData  ? data.profileData.map((item) => (
+                    <div className='col-md-6' key={item.id} onClick={()=>orderHandler(item)}>
 
 
-                        <div className='card m-3' style={{ borderRadius: '10px' }}>
+                        <div className={`card m-3 ${details == item.id ? classes.active : ""}`} style={{ borderRadius: '10px' }}>
                             <div className='m-3'>
 
-                                <h5>{item.first_name + " " + item.last_name}</h5>
-                                <h5>{item.address}</h5>
-                                <h5>{item.phone}</h5>
+                                <h5 className={`${classes.text}`} >FullName : {item.first_name + " " + item.last_name}</h5>
+                                <h5 className={`${classes.text}`}>Address : {item.address}</h5>
+                                <h5 className={`${classes.text}`}>Phone Number :{item.phone}</h5>
                             </div>
 
                         </div>

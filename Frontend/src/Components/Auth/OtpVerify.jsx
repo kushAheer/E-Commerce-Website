@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './OtpVerify.module.css'
 import Button from '../../UI/Button'
-import useVerifyOtp from '../../Hooks/useVerifyOtp'
+import useVerifyOtp from '../../Hooks/useVerifyOtp.js'
 
 function OtpVerify() {
 

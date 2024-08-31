@@ -3,7 +3,7 @@ import HomeBanner from './HomeBanner.jsx'
 import Card from 'react-bootstrap/Card'
 import cardImage from '../../assets/gxsoycvl4m8sxjukakm5.webp'
 import Button from '../../UI/Button.jsx'
-import useGetCategory from '../../Hooks/useGetCategory.jsx'
+import useGetCategory from '../../Hooks/useGetCategory.js'
 import { Link } from 'react-router-dom'
 
 function HomeComponent() {
