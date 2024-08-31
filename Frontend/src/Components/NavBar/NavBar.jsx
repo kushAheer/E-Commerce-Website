@@ -9,8 +9,11 @@ function NavBar() {
 
 
     const isAuth = useSelector(state => state.users.user)
-    const admin = isAuth?.role === 'admin';
     const totalQuantity = useSelector(state => state.carts.totalQty)
+    const categroy = useSelector(state => state.categories.categories)
+    
+    
+    const admin = isAuth?.role === 'admin';
     const {loading , logOutUser} = useLogOut()
 
     const logOutHandler = async () => {
@@ -36,7 +39,7 @@ function NavBar() {
                                 <Link to={'/product'} className="nav-link" href="#">Products</Link>
                             </li>
                             <li className="nav-item">
-                                <Link to className="nav-link" href="#">Category</Link>
+                                <Link to className="nav-link">Category</Link>
                             </li>
                         </ul>
                     </div>

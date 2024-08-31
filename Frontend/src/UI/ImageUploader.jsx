@@ -29,6 +29,11 @@ function ImageUploader({setImage ,prev }) {
 		
 	}
 
+	const removeImage = (id) => {
+		const newGallary = gallary.filter((image) => image.id !== id)
+		setGallary(newGallary)
+	}
+
 
 	return (
 		<>
@@ -38,7 +43,7 @@ function ImageUploader({setImage ,prev }) {
 
 			
 			{gallary.map((image) => (
-				<div key={image.id} className='pt-3'>
+				<div key={image.id} className='pt-3' onClick={()=>removeImage(image.id)}>
 					<img width={"100"} height={"100"} src={image.src} alt="external-image-upload-multimedia-thin-kawalan-studio"/>	
 				</div>
 			))}

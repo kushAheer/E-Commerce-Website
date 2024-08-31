@@ -3,9 +3,11 @@ import { Link, Outlet } from 'react-router-dom'
 import useGetProduct from '../../Hooks/useGetProduct';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 function ProductNavBar() {
 
     const navigate = useNavigate()
+    const [searchParams] = useSearchParams()
     // const onSelect = (e) => {
     //     console.log(e.target.value);
         
@@ -20,12 +22,16 @@ function ProductNavBar() {
     //     setType(e.target.value)
     // }
     const handleSortChange = (event) => {
+
         const value = event.target.value
+        const params = new URLSearchParams(searchParams)
+        
         if (value === 'normal') {
-            navigate('/product')
+            params.delete('sortBy')
         } else {
-            navigate(`/product?sortBy=${value}`)
+            params.set('sortBy', value)
         }
+        navigate('/product?' + params.toString())
     }
 
 

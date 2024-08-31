@@ -20,14 +20,14 @@ function CreateProduct() {
 
 
     const handleCheck = (e) => {
-        
+
         setCategoryList([...categoryList, e.target.value])
     }
     const createTree = (categories) => {
-        
+
         const tree = categories.map((item) => {
             return (
-                
+
                 <li key={item.category.id} >
                     <input type='checkbox' className='form-checkbox' value={item.category.id} onChange={handleCheck} />
                     <label className='m-1' style={{ fontSize: '0.75rem' }}>{item.category.category_name}</label>
@@ -42,10 +42,10 @@ function CreateProduct() {
         })
         return tree;
     }
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+
         const data = {
             name: Name,
             description: Description,
@@ -54,7 +54,7 @@ function CreateProduct() {
             image: image,
             frontImage: e.target['front-image'].files,
             categoryList: categoryList,
-            
+
         }
 
         await createProduct(data);

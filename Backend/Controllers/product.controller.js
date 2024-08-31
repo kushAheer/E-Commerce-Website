@@ -4,39 +4,57 @@ import AppDbContext from "../Db/AppDbContext.js";
 //GET REQUESTS <OPEN>
 
 export const getProductsRequest = async (req, res) => {
+    
     try {
-        
         const db = await AppDbContext();
-        
-        const {sortBy , category} = req.query;
-
-        let query = 'SELECT * FROM products WHERE 1 = 1 ';
-        // if(category != undefined){
-        //     query += `AND id IN (SELECT product_id FROM category_product WHERE  = (SELECT * from categories Where category_slug = ${category}) `;
-        // }
-
-        if(sortBy != undefined && sortBy != 'normal'){
-            query += `ORDER BY product_price ${sortBy} `;
+        const { sortBy, category } = req.query;
+    
+        let queryParams = [];
+        let query = `
+            SELECT p.*
+            FROM products p
+            JOIN category_product cp ON p.id = cp.product_id
+            JOIN categories c ON cp.category_id = c.id
+            WHERE 1 = 1
+            AND c.parent_cat_id != 0
+        `;
+    
+        if (category !== undefined) {
+            
+            query += `
+                AND c.id IN (
+                    SELECT id FROM categories WHERE category_slug = ?
+                    UNION ALL
+                    SELECT id FROM categories WHERE parent_cat_id = (
+                        SELECT id FROM categories WHERE category_slug = ?
+                    )
+                )
+            `;
+            queryParams.push(category, category);
         }
-
+    
         
-        
-
-        const [products] = await db.query(query);
-
-        if(products.length == 0){
-
-            return res.status(404).json({status : 404 , message : "No Data Found"});
-
+        if (sortBy !== undefined ) {
+            query += ` ORDER BY p.product_price ${sortBy === 'ASC' ? 'ASC' : 'DESC'}`;
         }
-        
-        return res.status(200).json({status: 200, productsData : products});
-
-        
+    
+        const [products] = await db.query(query, queryParams);
+    
+        if (products.length === 0) {
+            return res.status(404).json({ status: 404, message: "No Product Found", productsData: [] });
+        }
+    
+        return res.status(200).json({ status: 200, productsData: products });
+    
     } catch (error) {
+        
+        console.error(error);
+        
+        return res.status(500).json({ status: 500, message: "Internal Server Error" });
 
-        return res.status(500).json({message: "Internal Server Error" , errorMessage : error.message});
     }
+    
+    
    
 }
 

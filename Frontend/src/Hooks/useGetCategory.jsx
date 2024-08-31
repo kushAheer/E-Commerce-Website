@@ -3,11 +3,13 @@ import { useState } from 'react'
 import { getCategoryRequest } from '../Utils/CategoryGet'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
-
+import { useDispatch } from 'react-redux'
+import { addCategory } from '../Context/Slices/categorySlice'
 
 
 function useGetCategory() {
 
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([])
     const user  = useSelector(state => state.users.user)
@@ -21,6 +23,7 @@ function useGetCategory() {
 
             if(response.status === 200){
                 
+                dispatch(addCategory(response.data))
                 setCategories(response.data);
 
             }else{

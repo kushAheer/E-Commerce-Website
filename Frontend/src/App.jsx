@@ -21,6 +21,11 @@ import ProductDetailPage, { productDetailsLoader } from './Pages/ProductDetailPa
 import CartPage from './Pages/CartPage'
 import Profilepage from './Pages/Profilepage'
 
+import AddressCreate from './Components/Cart/AddressCreate'
+import ShoppingList from './Components/Cart/ShoppingList'
+import AddressPage, { AddressPageLoader } from './Pages/AddressPage'
+// import AddressPage from './Pages/AddressPage'
+
 
 function App() {
   	const [count, setCount] = useState(0)
@@ -46,8 +51,14 @@ function App() {
 			},
 			{path : '/product/:slug', element : <ProductDetailPage /> , loader : productDetailsLoader},
 			// {path : '/category', element : <h1>Category</h1>},
-			{path : '/cart', element : <CartPage />},
 			{path :'/profile',element : user ?  <Profilepage/> : <Navigate to={"/login"} />},
+			{path : '/cart',
+			element : <CartPage /> ,
+			children :[
+				{path :'' ,element : <ShoppingList/>},
+				{path : 'address', element : user ? <AddressPage/> : <Navigate to={"/login"} /> , loader :AddressPageLoader},
+			]},
+			{path : '/cart/createAddress', element : user ? <AddressCreate/> : <Navigate to={"/login"} />},
 			{
 				path : '/admin',
 				element : user?.role == "admin" ?  <AdminLayouPage /> : <Navigate to={"/"} />,

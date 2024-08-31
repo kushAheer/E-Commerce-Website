@@ -15,6 +15,7 @@ import AppDbContext from './Db/AppDbContext.js';
 import authRouter from './Routes/auth.routes.js';
 import categoryRouter from './Routes/category.routes.js';
 import productRouter from './Routes/product.routes.js';
+import userRouter from './Routes/user.routes.js';
 //Routes <Close>
 
 dotenv.config(); //including this line to use the .env file
@@ -37,6 +38,7 @@ app.use(cookieParser()); //including this line to parse the incoming request wit
 app.use('/api/auth',authRouter);
 app.use('/api/category',categoryRouter)
 app.use('/api/product',productRouter)
+app.use('/api/user',userRouter)
 
 const filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filename);
