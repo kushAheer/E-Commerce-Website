@@ -11,10 +11,13 @@ const addressSlice = createSlice({
     reducers : {
         setAddress(state , action){
             state.item = action.payload
+        },
+        removeAddress(state , action){
+            state.item = []
         }
     }
 })
 
-export const {setAddress} = addressSlice.actions
+export const {setAddress , removeAddress} = addressSlice.actions
 
 export default addressSlice.reducer

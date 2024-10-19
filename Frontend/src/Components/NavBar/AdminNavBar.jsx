@@ -26,6 +26,7 @@ function AdminNavBar() {
                         <Dropdown.Menu>
                                 
                                 <Link to='/admin/product/create' className={`dropdown-item`}>Create Products</Link>
+                                <Link to='/admin/product' className={`dropdown-item`}>Products</Link>
                                 
                         </Dropdown.Menu>
                     </Dropdown>

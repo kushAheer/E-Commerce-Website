@@ -7,7 +7,7 @@ function useGetCategoryTree() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/category/getBothCategory')
+                const response = await fetch('/api/category/getBothCategory')
                 const data = await response.json()
                 setCategories(data.result)
                 

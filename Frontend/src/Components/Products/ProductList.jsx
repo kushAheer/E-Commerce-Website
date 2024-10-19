@@ -4,7 +4,7 @@ import ProductCard from '../../UI/ProductCard'
 import im from '../../../../Backend/Uploads/1723230253388-wp7337480-anime-mac-air-wallpapers.jpg'
 import { useSelector } from 'react-redux'
 
-function ProductList() {
+function ProductList({type}) {
     const [filter , setFilter] = React.useState('')
     
     
@@ -19,7 +19,7 @@ function ProductList() {
                 <div className='col-md-3 col-6' key={item.id}>
                     
                     
-                    <ProductCard image={`http://localhost:5000/uploads/${item.product_image}`} title={item.product_name} price={item.product_price} slug = {item.product_slug} />
+                    <ProductCard image={`http://localhost:5000/uploads/${item.product_image}`} title={item.product_name} buttonType={type == "Admin" ? "Edit" : "DETAILS"} price={item.product_price} slug = {type == "Admin" ? `edit/${item.product_slug}` :  item.product_slug} type={type} />
                 </div>
             ))}
             {loading && <h1>Loading...</h1>}

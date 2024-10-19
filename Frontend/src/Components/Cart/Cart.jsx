@@ -10,13 +10,19 @@ function Cart() {
     
     const totalQuantity = useSelector(state => state.carts.totalQty)
     const totalPrice = useSelector(state => state.carts.totalPrice)
-    const id = useSelector(state =>state.address.id)
+    const id = useSelector(state =>state.address.item.id) 
 
+    const [isValid , setIsValid] = useState(true)
+    const [addressSelected , setAddressSelected] = useState(false)
+    const [paymentSelected , setPaymentSelected] = useState(false)
+    
     
     const location  = useLocation()
 
-    const currentUrl = location.pathname + location.search
-    console.log(currentUrl)
+    
+    
+
+    
 
     return (
 
@@ -60,16 +66,9 @@ function Cart() {
                             <div className='col-md-12 p-3'>
 
                                 <Link to={'/product'}><button className={`btn pointer text-uppercase w-100`} style={{ backgroundColor: "white", color: "black" ,border: '1px solid black' ,borderRadius : '0px' }}>Continue Shopping</button></Link>
-                                {
-                                    currentUrl == '/cart' || currentUrl == '/cart/' ? <Link to={'/cart/address'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Choose Delivery Address</button></Link> : null
-                                }
-                                {
-                                    currentUrl == '/cart/address' || currentUrl == '/cart/address/' ? <Link to={'/cart/checkout'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Proceed to CheckOut</button></Link> : null
-                                }
-                                {
-                                     (currentUrl === '/cart/checkout' ) ? <Link to={'/cart/checkout'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Confirm Order</button></Link> : null
-                                }
-
+                                
+                                {isValid && totalQuantity != 0 ? <Link to={'/cart/address'}><button className={`btn pointer text-uppercase w-100 mt-2`} onClick={()=>setIsValid((prev)=>!prev)} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Choose Delivery Address</button></Link> : null}
+                                {!isValid && !(id == undefined) ? <Link to={'/cart/checkout'}><button className={`btn pointer text-uppercase w-100 mt-2`} style={{ backgroundColor: "black", color: "white" ,borderRadius : '0px'}}>Proceed to Payment</button></Link> : null}
                             </div>
                         </div>
                     </div>

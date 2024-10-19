@@ -5,7 +5,7 @@ export const createCategoryRequest = async (category) =>{
     formData.append('frontImage',category.frontImage);
 
 
-    return await fetch('http://localhost:5000/api/category/CreateCategory', {
+    return await fetch('/api/category/CreateCategory', {
     method: 'POST',
     
     body: formData
@@ -14,7 +14,7 @@ export const createCategoryRequest = async (category) =>{
 
 export const createSubCategoryRequest = async (category) =>{
     
-    return await fetch('http://localhost:5000/api/category/CreateSubCategory', {
+    return await fetch('/api/category/CreateSubCategory', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',

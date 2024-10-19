@@ -27,7 +27,7 @@ export const createProductRequest = async (product) => {
 
 
     console.log(formData)
-    return await fetch('http://localhost:5000/api/product/CreateProduct', {
+    return await fetch('/api/product/CreateProduct', {
         method: 'POST',
         body: formData
     }).then(res => res.json())

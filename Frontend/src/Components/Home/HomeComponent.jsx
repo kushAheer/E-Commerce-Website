@@ -17,9 +17,8 @@ function HomeComponent() {
         <>
             <div>
                 <HomeBanner />
-
             </div>
-            <div className='container pt-5'>
+            <div className='container pt-5 pb-5'>
                 <div className='row'>
                     <div className='col-md-12'>
                         <div className='row'>
@@ -38,12 +37,8 @@ function HomeComponent() {
                                         </div>
 
                                     </div>
-                                    </>
-                                
+                                    </> 
                             ))}
-
-
-
                         </div>
 
                     </div>

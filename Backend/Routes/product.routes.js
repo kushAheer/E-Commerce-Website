@@ -3,7 +3,8 @@ import {
     
     getProductsByIdRequest,
     getProductsRequest,
-    createProductRequest, 
+    createProductRequest,
+    updateProductRequest, 
     
 } from "../Controllers/product.controller.js";
 import { upload } from "../Middleware/mutler.middleware.js";
@@ -30,6 +31,17 @@ router.post('/CreateProduct',upload.fields([
         maxCount: 1
     }
 ]),createProductRequest);
+
+router.post('/edit/:id',upload.fields([
+    {
+        name: 'images',
+        maxCount: 5
+    },
+    {
+        name: 'frontImage',
+        maxCount: 1
+    }
+]),updateProductRequest);
 
 
 

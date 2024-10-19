@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { Link, useLoaderData } from 'react-router-dom'
 import classes from './Cart.module.css'
-import { useDispatch } from 'react-redux'
-import { setAddress } from '../../Context/Slices/addressSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAddress , removeAddress } from '../../Context/Slices/addressSlice'
 
 function Address() {
 
@@ -10,11 +10,21 @@ function Address() {
     const data = useLoaderData()
     console.log(data.profileData)
     const [details , setDetails] = React.useState(null)
-    
+    const isAdressSelected = useSelector(state => state.address.item) == null ? false : true
 
     const orderHandler = (item) => {
-        dispatch(setAddress(item))
-        setDetails(item.id)
+
+        
+        if(details == null){
+            dispatch(setAddress(item))
+            setDetails(item.id)
+        }else{
+            setDetails(null)
+            dispatch(removeAddress())
+            dispatch(setAddress(item))
+            setDetails(item.id)
+
+        }
     }
 
     return (

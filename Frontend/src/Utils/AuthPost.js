@@ -1,6 +1,6 @@
 export const registerRequest = async (data)=>{
     
-    const res = await fetch('http://localhost:5000/api/auth/register', {
+    const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -15,7 +15,7 @@ export const registerRequest = async (data)=>{
 
 export const verifyOtpRequest = async (otp)=>{
     console.log(otp)
-    const res  = await fetch('http://localhost:5000/api/auth/verify/otp', {
+    const res  = await fetch('/api/auth/verify/otp', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -28,7 +28,7 @@ export const verifyOtpRequest = async (otp)=>{
 }
 
 export const loginRequest = async (data)=>{
-    const res = await fetch('http://localhost:5000/api/auth/login', {
+    const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export const loginRequest = async (data)=>{
 }
 
 export const logoutRequest = async ()=>{
-    const res = await fetch('http://localhost:5000/api/auth/logout', {
+    const res = await fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include'
     })

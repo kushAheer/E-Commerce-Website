@@ -4,7 +4,7 @@ import classes from './ProductCard.module.css'
 import { Link } from 'react-router-dom'
 
 
-function ProductCard({image ,title , price,slug}) {
+function ProductCard({image ,title , price,slug , buttonType ,type}) {
     
     
 
@@ -19,7 +19,7 @@ function ProductCard({image ,title , price,slug}) {
 
                     <div className='col-md-12'>
 
-                        <Link to={`/product/${slug}`}><Button>DETAILS</Button></Link>
+                        <Link to={`${type == "Admin" ? `${slug}` :`/product/${slug}`}`}><Button>{buttonType}</Button></Link>
                     </div>
                     {/* <div className='col-md-4'>
 

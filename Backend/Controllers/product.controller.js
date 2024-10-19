@@ -235,3 +235,76 @@ export const deleteProductRequest = async (req, res) => {
 }
 
 //DELETE REQUESTS <CLOSE>
+
+
+//PUT REQUESTS <OPEN>
+
+export const updateProductRequest = async (req, res) => {
+    try {
+
+        const { id } = req.params;
+
+        const { name, description, price, categoryList } = req.body;
+
+
+        if (name == undefined || description == undefined || price == undefined || categoryList == undefined) {
+
+            return res.status(202).json({ status: 202, message: 'Please fill all the fields' })
+
+        }
+        const slug = name.trim().replace(/\s+/g, '-').toLowerCase();
+
+        if (name.length < 3) {
+
+            return res.status(202).json({ status: 202, message: 'Product name should be at least 3 characters long' })
+
+        }
+
+        if(!(req.files.frontImage && req.files.images)){
+
+            return res.status(202).json({ status: 202, message: 'Please upload Product images' })
+
+        }
+
+        const images = req.files.images;
+        const frontImage = req.files.frontImage[0].filename;
+
+        const db = await AppDbContext();
+        const date = new Date();
+
+        const [result] = await db.query('UPDATE products SET product_name = ? , product_desc = ? , product_price = ? , product_slug = ? , product_image = ? , updated_at = ? WHERE id = ?', [name, description, price, slug, frontImage, date, id]);
+
+        if (result.affectedRows == 0) {
+
+            return res.status(500).json({ message: "Internal Server Error", errorMessage: "Product Update Failed" });
+
+        }
+
+        await db.query('DELETE FROM product_gallery WHERE product_id = ?' , [id]);
+
+        for (let i = 0; i < images.length; i++) {
+
+            await db.query('INSERT INTO product_gallery (product_id , image_name ,created_at , updated_at) VALUES (?,?,?,?)', [id, images[i].filename, date, date]);
+
+        }
+
+        await db.query('DELETE FROM category_product WHERE product_id = ?' , [id]);
+
+        for (let j = 0; j < categoryList.length; j++) {
+
+            const [catResult] = await db.query('INSERT INTO category_product (product_id , category_id) VALUES (?,?)', [id, categoryList[j]]);
+
+            if (catResult.affectedRows == 0) {
+
+                return res.status(500).json({ message: "Internal Server Error", errorMessage: "Product Update Failed" });
+
+            }
+        }
+
+        return res.status(200).json({ status: 200, message: 'Product Updated' })
+
+        
+    } catch (error) {
+        
+    }
+}

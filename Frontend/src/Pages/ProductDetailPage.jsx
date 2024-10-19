@@ -17,7 +17,7 @@ export const productDetailsLoader = async ({params})=>{
     try {
         
         const slug = params.slug
-        const response  = fetch(`http://localhost:5000/api/product/${slug}`,{
+        const response  = fetch(`/api/product/${slug}`,{
             method : 'GET',
             headers : {
                 'Content-Type' : 'application/json'

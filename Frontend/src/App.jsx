@@ -25,6 +25,7 @@ import AddressCreate from './Components/Cart/AddressCreate'
 import ShoppingList from './Components/Cart/ShoppingList'
 import AddressPage, { AddressPageLoader } from './Pages/AddressPage'
 import CheckOut from './Pages/CheckOut'
+import AdminProductList from './Components/Admin/AdminProductList'
 // import AddressPage from './Pages/AddressPage'
 
 
@@ -70,6 +71,8 @@ function App() {
 					{path : 'orders', element : <h1>Orders</h1>},
 					{path : 'category/create', element : <CreateCategory/>},
 					{path : 'subcategory/create', element : <CreateSubCategory/>},
+					{path : 'product/edit/:id', element : <CreateProduct/>},
+					{path : 'product', element : <AdminProductList/>},
 				]
 			}
 		]

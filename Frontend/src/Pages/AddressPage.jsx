@@ -16,7 +16,7 @@ function AddressPage() {
 export default AddressPage
 
 export const AddressPageLoader = () => {
-    const response = fetch('http://localhost:5000/api/user/details',{
+    const response = fetch('/api/user/details',{
         method : 'GET',
         headers : {
             'Content-Type' : 'application/json',

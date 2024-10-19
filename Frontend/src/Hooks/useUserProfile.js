@@ -43,7 +43,7 @@ function useUserProfile() {
 export default useUserProfile
 
 const addUserDetails = async (data) => {
-    const response  = await fetch('http://localhost:5000/api/user/CreateUser',{
+    const response  = await fetch('/api/user/CreateUser',{
         method : 'POST',
         headers : {
             'Content-Type' : 'application/json',

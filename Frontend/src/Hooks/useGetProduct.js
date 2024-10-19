@@ -65,7 +65,7 @@ export default useGetProduct
 
 
 const productRequest = async (query) => {
-    const response = await fetch(`http://localhost:5000/api/product?${query}`)
+    const response = await fetch(`/api/product?${query}`)
     const data = await response.json()
 
     return data
