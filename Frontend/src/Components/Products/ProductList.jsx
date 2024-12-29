@@ -1,7 +1,7 @@
 import React from 'react'
 import useGetProduct from '../../Hooks/useGetProduct'
 import ProductCard from '../../UI/ProductCard'
-import im from '../../../../Backend/Uploads/1723230253388-wp7337480-anime-mac-air-wallpapers.jpg'
+
 import { useSelector } from 'react-redux'
 
 function ProductList({type}) {

@@ -32,7 +32,10 @@ function OtpVerify() {
                         <input type="number" max={9} min={0} className={`${classes.input}`}/>
                         <input type="number" max={9} min={0} className={`${classes.input}`}/>
                     </div>
-                    <Button>{loading ? "Loading" : "Verify"}</Button>
+                    <div className='pt-2'>
+
+                        <Button>{loading ? "Loading" : "Verify"}</Button>
+                    </div>
                 </form>
                 <div className={`${classes.details} pt-5`}>
                     <p>Check Your Register Email Account for OTP</p>

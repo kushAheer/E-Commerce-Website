@@ -3,7 +3,8 @@ import multer from "multer";
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'Uploads') //cb -> it is  a callback function which takes two parameters 1st is error and 2nd is destination
+        console.log('Destination:', file);
+        cb(null, './Backend/Uploads') //cb -> it is  a callback function which takes two parameters 1st is error and 2nd is destination
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + '-' + file.originalname)
